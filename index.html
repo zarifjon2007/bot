@@ -6,12 +6,29 @@
     <title>Document</title>
 </head>
 <body>
-    <h1 id="name">Ism yuklanmoqda...</h1>
+    <h1 id="name">Telegram user info:</h1>
+    <div id="info">
+        Loading...
+    </div>
+    <script> src="https://telegram.org/js/telegram-web-app.js"</script>
     <script>
         const tg=window.Telegram.WebApp;
-        tg.expand()
+        tg.ready()
 
-        document.getElementById('name').innerText=tg.initDataUnsafe.user.first_name;
+        const user=tg.initDataUnsafe?.user;
+
+        if(user){
+            document.getElementById("info").innerHTML=
+            `
+              ID:${user.id}<br>
+              Ism:${user.first_name}<br>
+              Familya:${user.last_name || 'yoq'}<br>
+              Username:${user.username || 'yoq'};
+            `
+        } else{
+            document.getElementById("info").innerText="Foydalanuvchi malumotlari topilmadi.";
+        }
+
     </script>
 </body>
 </html>
